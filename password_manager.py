@@ -27,7 +27,7 @@ def encrypt_passwords_in_file(filename: str) -> None:
             datos_actualizados.append(fila)
             
 
-    with open(filename, "w", newline="", ) as f:
+    with open(filename, "w",) as f:
         escritor = csv.writer(f)
         escritor.writerows(datos_actualizados)
 

@@ -15,21 +15,21 @@ def encrypt_single_pass(filename: str) -> None:
 
 
 def encrypt_passwords_in_file(filename: str) -> None:
-    datos_actualizados = []
-
-    with open(filename, "r",) as f:
+    filas_actualizadas = []
+    
+    with open(filename, "r", encoding="utf-8") as f:
         lector = csv.reader(f)
-        titutlos = next(lector)
-        datos_actualizados.append(titutlos)
-        
+        encabezado = next(lector, None)
+        if encabezado:
+            filas_actualizadas.append(encabezado)
         for fila in lector:
-            fila[2] = caesar_encrypt(fila[2])
-            datos_actualizados.append(fila)
-            
-
-    with open(filename, "w",) as f:
+            if len(fila) >= 3:
+                fila[2] = caesar_encrypt(fila[2])
+                filas_actualizadas.append(fila)
+                
+    with open(filename, "w", newline="", encoding="utf-8") as f:
         escritor = csv.writer(f)
-        escritor.writerows(datos_actualizados)
+        escritor.writerows(filas_actualizadas)
 
 
 def change_password(filename: str, website: str, password: str) -> bool:
